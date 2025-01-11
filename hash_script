@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if an argument is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <four-digit-number>"
+    exit 1
+fi
+
+# Extract the input argument
+input=$1
+
+# Validate that the input is a four-digit number
+if ! [[ $input =~ ^[0-9]{4}$ ]]; then
+    echo "Error: Input must be a four-digit number."
+    exit 1
+fi
+
+# Compute the SHA-256 hash
+hash=$(echo -n "$input" | sha256sum | awk '{print $1}')
+
+# Save the hash to hash_output.txt
+echo "SHA-256 hash of $input: $hash" > hash_output.txt
+
+# Inform the user
+echo "The hash has been saved to hash_output.txt."
